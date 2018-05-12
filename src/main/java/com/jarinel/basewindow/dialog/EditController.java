@@ -10,6 +10,7 @@ public class EditController implements Controller {
     private Model model;
 
     private DialogCallbacks dialogCallbacks;
+    private int index;
 
     public EditController() {
     }
@@ -33,16 +34,20 @@ public class EditController implements Controller {
         this.dialogCallbacks = dialogCallbacks;
     }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     public void init() {
         view.setDialogTitle("Редактирование записи");
         view.setButtonText("Сохранить");
-        view.setInputText(model.getCurrentData());
+        view.setInputText(model.getData(index));
         view.show();
     }
 
     @Override
     public void handleConfirmButtonClick(ActionEvent event) {
-        model.save(view.getInputText());
+        model.updateData(index, view.getInputText());
         dialogCallbacks.handleSuccessfulEdit();
         view.closeWindow();
     }

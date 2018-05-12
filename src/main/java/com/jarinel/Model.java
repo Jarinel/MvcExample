@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Model {
     private List<String> data = new ArrayList<>();
-    private int index = 0;
 
     public Model() {
         data.add("HK416 — немецкая штурмовая винтовка, адаптированная под американскую модульную систему AR15, созданная фирмой Heckler & Koch. Несмотря на внешнее сходство с карабином M4, механизм винтовки на самом деле ближе к немецкой Н&К G36, а не к AR-образцам американских винтовок. Первоначально новое оружие должно было стать сменным модулем для установки на любую нижнюю часть ствольной коробки от карабина M4 или M16, однако позже появились и полнокомплектные автоматы. Название HK416 означает совместимость по стандартам NATO с магазинами от M4 и M16 - NATO-STANAG-DRAFT 4179 (M4/M16 Magazines) . Последний вариант автомата назван HK416A5. Кроме того поставляется версия под патрон 7,62х51мм - HK417 которая конкурирует с FN SCAR-H. Принята на вооружение бундесвера под обозначением семейства G38.");
@@ -18,27 +17,19 @@ public class Model {
                 "В период после 1963 года товарный знак AR-15 принадлежит компании Colt’s Manufacturing Company и относится исключительно к самозарядным винтовкам. Вариации AR-15 изготовляются и другими производителями, но под другими торговыми марками.");
     }
 
+    public int getDataSize() {
+        return data.size();
+    }
+
     public void addData(String text) {
         data.add(text);
     }
 
-    public void prev() {
-        index = index - 1 < 0 ? data.size() - 1 : index - 1;
-    }
-
-    public void next() {
-        index = index + 1 >= data.size() ? 0 : index + 1;
-    }
-
-    public void last() {
-        index = data.size() - 1;
-    }
-
-    public String getCurrentData() {
+    public String getData(int index) {
         return data.get(index);
     }
 
-    public void save(String text) {
+    public void updateData(int index, String text) {
         data.set(index, text);
     }
 }

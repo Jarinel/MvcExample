@@ -14,6 +14,8 @@ public class BaseWindowController implements Controller, DialogCallbacks {
 
     private JFrame rootPanel;
 
+    private int index = 0;
+
     public BaseWindowController() {
     }
 
@@ -36,25 +38,26 @@ public class BaseWindowController implements Controller, DialogCallbacks {
     }
 
     public void init() {
-        view.setTextToDisplay(model.getCurrentData());
+        view.setTextToDisplay(model.getData(index));
     }
 
     @Override
     public void handlePrevButtonClick(ActionEvent event) {
-        model.prev();
-        view.setTextToDisplay(model.getCurrentData());
+        index = index - 1 < 0 ? model.getDataSize() - 1 : index - 1;
+        view.setTextToDisplay(model.getData(index));
     }
 
     @Override
     public void handleNextButtonClick(ActionEvent event) {
-        model.next();
-        view.setTextToDisplay(model.getCurrentData());
+        index = index + 1 >= model.getDataSize() ? 0 : index + 1;
+        view.setTextToDisplay(model.getData(index));
     }
 
     @Override
     public void handleEditButtonClick(ActionEvent event) {
         DialogView view = new DialogView(rootPanel);
         EditController controller = new EditController(view, model, this);
+        controller.setIndex(index);
         controller.init();
     }
 
@@ -67,12 +70,12 @@ public class BaseWindowController implements Controller, DialogCallbacks {
 
     @Override
     public void handleSuccessfulEdit() {
-        view.setTextToDisplay(model.getCurrentData());
+        view.setTextToDisplay(model.getData(index));
     }
 
     @Override
     public void handleSuccessfulAdd() {
-        model.last();
-        view.setTextToDisplay(model.getCurrentData());
+        index = model.getDataSize() - 1;
+        view.setTextToDisplay(model.getData(index));
     }
 }
